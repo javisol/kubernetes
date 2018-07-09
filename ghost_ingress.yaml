@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ghostingress
+spec:
+  rules:
+    # añadir en el /etc/hosts de fuera de virtualbox (host) perrito.mired resuelve contra ip master kubernetes
+  - host: gatito.mired
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ghostservice
+          servicePort: 2368

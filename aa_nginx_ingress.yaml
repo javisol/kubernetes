@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginxingress
+spec:
+  rules:
+    # añadir en el /etc/hosts de fuera de virtualbox (host) perrito.mired resuelve contra ip master kubernetes
+  - host: perrito.mired
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx
+          servicePort: 80
