@@ -14,3 +14,6 @@ spec:
         image: sirile/scala-boot-test
         ports:
         - containerPort: 80
+      nodeSelector:
+        #region: asia
+        env: production

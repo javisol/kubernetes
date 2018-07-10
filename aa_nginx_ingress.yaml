@@ -5,7 +5,7 @@ metadata:
 spec:
   rules:
     # añadir en el /etc/hosts de fuera de virtualbox (host) perrito.mired resuelve contra ip master kubernetes
-  - host: perrito.mired
+  - host: kubi.mired
     http:
       paths:
       - path: /

@@ -1,0 +1,29 @@
+# aparentemente funciona, despliega solo en los nodos production
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: env
+                  operator: In
+                  values:
+                    - production
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: nginx
+        image: sirile/scala-boot-test
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        env: production  
