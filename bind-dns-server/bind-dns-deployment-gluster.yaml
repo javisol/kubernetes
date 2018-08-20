@@ -24,7 +24,14 @@ spec:
               volumeMounts:
                 - mountPath: /data/bind
                   name: data
+                - mountPath: /mnt/glusterfs
+                  name: glusterfs
             volumes:
             - name: data
               emptyDir: {}
+            - name: glusterfs
+              glusterfs:
+                endpoints: glusterfs-cluster
+                path: gv0
+                readOnly: false
 
