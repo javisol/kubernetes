@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pruebagluster
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: pruebagluster
+    spec:
+      containers:
+      - name: pruebagluster
+        image: sirile/scala-boot-test
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /mnt/glusterfs
+          name: glusterfs
+      volumes:
+      - name: glusterfs
+        glusterfs:
+          endpoints: glusterfs-cluster
+          path: k8s
+          readOnly: false
