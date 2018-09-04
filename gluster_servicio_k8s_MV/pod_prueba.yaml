@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: pruebagluster
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:

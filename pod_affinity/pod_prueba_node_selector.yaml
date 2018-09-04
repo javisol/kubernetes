@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pruebanodeselector
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pruebanodeselector
+    spec:
+      containers:
+      - name: pruebanodeselector
+        image: sirile/scala-boot-test
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        env: development
+
