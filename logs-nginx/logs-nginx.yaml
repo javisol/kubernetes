@@ -1,0 +1,75 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: front-nginx-logs
+spec:
+  rules:
+  - host: kubi.mired
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: front-nginx-logs
+          servicePort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-nginx-logs
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: front-nginx-logs
+  type: ClusterIP
+#  externalIPs:
+#    - 192.168.1.51
+#    - 192.168.1.46
+#    - 192.168.1.50
+#    - 192.168.1.62
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: front-nginx-logs
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: front-nginx-logs
+    spec:
+#      nodeSelector:
+#        security-zone: front
+#      volumes:
+#      - name: nginx-ssl
+#        secret:
+#          secretName: nginx-ssl
+      containers:
+      - name: front-nginx-logs
+        image: nginx:latest
+        #imagePullPolicy: "Always"
+        ports:
+          - containerPort: 80
+        volumeMounts:
+#          - name: front-nginx-logs-config
+#            mountPath: /usr/share/nginx/html/
+          - name: front-nginx-logs-www-data
+            mountPath: /usr/share/nginx/html/
+          - name: front-nginx-logs-config
+            mountPath: /etc/nginx/conf.d
+          - name: front-nginx-logs-auth
+            mountPath: /etc/nginx/auth
+      volumes:
+        - name: front-nginx-logs-config
+          configMap:
+            name: front-nginx-logs-config
+        - name: front-nginx-logs-index
+          configMap:
+            name: front-nginx-logs-index
+        - name: front-nginx-logs-auth
+          configMap:
+            name: front-nginx-logs-auth
+        - name: front-nginx-logs-www-data
+          emptyDir: {}
+            
