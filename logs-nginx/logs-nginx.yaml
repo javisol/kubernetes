@@ -68,8 +68,8 @@ spec:
           configMap:
             name: front-nginx-logs-index
         - name: front-nginx-logs-auth
-          configMap:
-            name: front-nginx-logs-auth
+          secret:
+            secretName: front-nginx-logs-auth
         - name: front-nginx-logs-www-data
           emptyDir: {}
             
