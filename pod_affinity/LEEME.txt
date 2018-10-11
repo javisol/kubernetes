@@ -1,5 +1,5 @@
 nginx_deploy_podantiaffinity_hard.yaml: antiaffinity required. Solo despliega #pods<=#nodes
-nginx_deploy_podantiaffinity_hard_rolling_update.yaml: antiaffinity required con rolling update. NO FUNCIONA porque no puede desplegar los nuevos nodos para hacer el rolling update.
+nginx_deploy_podantiaffinity_hard_rolling_update.yaml: antiaffinity required con rolling update. NO FUNCIONA porque no puede desplegar los nuevos nodos para hacer el rolling update. Con las condiciones dadas y #nodes = 3 el deploy tendría que tener #pods = #nodes -1 para poder realizar el rolling update
 nginx_deploy_podantiaffinity_soft_rolling_update.yaml: antiaffinity preferred usando rolling update para la sustitución de pods en caso de patch. Funciona en cualquier caso
 nginx_deploy_podantiaffinity_soft.yaml: antiaffinity preferred
 pod_prueba_node_selector.yaml: prueba de de selección por label de nodo
