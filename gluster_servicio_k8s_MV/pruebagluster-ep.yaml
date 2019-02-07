@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: pruebagluster
+  namespace: gluster
 spec:
   replicas: 1
   template:
@@ -15,11 +16,12 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-        - mountPath: /mnt/glusterfs
-          name: glusterfs
+        - name: glusterfs
+          mountPath: /mnt/glusterfs
       volumes:
       - name: glusterfs
         glusterfs:
           endpoints: glusterfs-cluster
-          path: k8s
+          path: /k8s
           readOnly: false
+#        emptyDir: {}
