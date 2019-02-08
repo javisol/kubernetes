@@ -1,0 +1,81 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: front-nginx-logs
+  namespace: baremetal
+spec:
+  rules:
+  - host: kubi.mired
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx-baremetal
+          servicePort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-baremetal
+  namespace: baremetal
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: nginx-baremetal
+  type: ClusterIP
+#  externalIPs:
+#    - 192.168.1.51
+#    - 192.168.1.46
+#    - 192.168.1.50
+#    - 192.168.1.62
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-baremetal-np
+  namespace: baremetal
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: nginx-baremetal
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-baremetal
+  namespace: baremetal
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx-baremetal
+    spec:
+#      nodeSelector:
+#        security-zone: front
+#      volumes:
+#      - name: nginx-ssl
+#        secret:
+#          secretName: nginx-ssl
+      containers:
+      - name: nginx-baremetal
+        image: nginx:latest
+        #imagePullPolicy: "Always"
+        ports:
+          - containerPort: 80
+        volumeMounts:
+          - name: nginx-baremetal-www-data
+            mountPath: /usr/share/nginx/html/
+          - name: nginx-baremetal-config
+            mountPath: /etc/nginx/conf.d
+      volumes:
+        - name: nginx-baremetal-config
+          configMap:
+            name: nginx-baremetal-config
+        - name: nginx-baremetal-www-data
+          configMap:
+            name: nginx-baremetal-www-data
+            
