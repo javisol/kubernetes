@@ -1,0 +1,14 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ae-ngixn-hpa
+  namespace: ae
+spec:
+  maxReplicas: 12
+  minReplicas: 3
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: ae-nginx
+  targetCPUUtilizationPercentage: 50
+
