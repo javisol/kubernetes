@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nlp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-nlp
+  namespace: nlp
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: nginx-nlp
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-nlp-np
+  namespace: nlp
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: nginx-nlp
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-nlp
+  namespace: nlp
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx-nlp
+    spec:
+      containers:
+      - name: nginx-nlp
+        image: javisol/nginx-nlp:1.1
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+            
