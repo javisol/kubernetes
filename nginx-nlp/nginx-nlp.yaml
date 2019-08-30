@@ -33,16 +33,45 @@ metadata:
   name: nginx-nlp
   namespace: nlp
 spec:
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:
         app: nginx-nlp
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - nginx-nlp
+              topologyKey: kubernetes.io/hostname
       containers:
       - name: nginx-nlp
         image: javisol/nginx-nlp:1.1
         imagePullPolicy: Always
         ports:
           - containerPort: 80
-            
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 3
+        readinessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 10
+          timeoutSeconds: 1
+          periodSeconds: 5 
+          successThreshold: 1
+      terminationGracePeriodSeconds: 10     

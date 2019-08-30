@@ -1,2 +1,4 @@
 FROM nginx:alpine
 COPY index.html /usr/share/nginx/html/index.html
+COPY rai_perfil.png /usr/share/nginx/html/
+#COPY health.conf /etc/nginx/conf.d
