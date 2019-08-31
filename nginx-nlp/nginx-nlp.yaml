@@ -39,6 +39,15 @@ spec:
       labels:
         app: nginx-nlp
     spec:
+      tolerations:
+      - key: "node.kubernetes.io/unreachable"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 2
+      - key: "node.kubernetes.io/not-ready"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 2
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -53,8 +62,9 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
       - name: nginx-nlp
-        image: javisol/nginx-nlp:1.1
-        imagePullPolicy: Always
+        image: javisol/nginx-nlp:1.0
+        #imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 80
         livenessProbe:
