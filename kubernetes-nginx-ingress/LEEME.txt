@@ -1,0 +1,5 @@
+git clone https://github.com/nginxinc/kubernetes-ingress.git
+kubectl create -f ns-and-sa.yaml
+kubectl create -f default-server-secret.yaml
+kubectl create -f nginx-config.yaml
+kubectl create -f nginx-ingress.yaml 
