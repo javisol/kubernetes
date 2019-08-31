@@ -1,0 +1,10 @@
+frontend kubernetes
+  bind *:80
+  stats uri /haproxy?stats
+  default_backend kubernetes_backend
+
+backend kubernetes_backend
+  balance roundrobin
+  server nlp-work00 192.168.2.100:80 check fall 1 rise 2
+  server nlp-work01 192.168.2.101:80 check fall 1 rise 2
+  server nlp-work02 192.168.2.102:80 check fall 1 rise 2
