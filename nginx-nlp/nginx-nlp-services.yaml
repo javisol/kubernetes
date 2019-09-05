@@ -9,15 +9,3 @@ spec:
   selector:
     app: nginx-nlp
   type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-nlp-np
-  namespace: nlp
-spec:
-  ports:
-  - port: 80
-  selector:
-    app: nginx-nlp
-  type: NodePort
