@@ -1,8 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
-  namespace: nlp
-  name: ns-viewer
+  name: cluster-viewer
 rules:
 - apiGroups: ["","extensions"] # "" indicates the core API group
   resources: ["*"]

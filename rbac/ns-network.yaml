@@ -2,8 +2,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   namespace: nlp
-  name: ns-viewer
+  name: ns-network
 rules:
 - apiGroups: ["","extensions"] # "" indicates the core API group
-  resources: ["*"]
-  verbs: ["get", "watch", "list"]
+  resources: ["services", "ingresses"]
+  verbs: ["get", "watch", "list", "update", "patch", "delete"]
