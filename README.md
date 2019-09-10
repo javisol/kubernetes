@@ -40,6 +40,8 @@ sudo chown <user>:<user> .kube/config
 ```
 
 #### Instalar el CNI
+Sólo hay que instalar uno (flannel, calico, weave.net)
+
 Flannel:
 ```
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
