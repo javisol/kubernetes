@@ -2,7 +2,7 @@ Crear un usuario: rai y un grupo: nlp-viewers
 (creo el usuario en el master también. Lo lógico sería usar el bastión)
 en /home/rai/certs irán los ficheros obtenidos
 
-  openssl genrsa -out rai.key 2048
+  openssl genrsa -out rai.key 4096
   openssl req -new -key rai.key -out rai.csr -subj "/CN=rai/O=ratoncio"
 Hay que localizar la CA de kubernetes (habitualmente está en /etc/kubernetes/pki)
   sudo openssl x509 -req -in rai.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out rai.crt -days 1200
@@ -17,6 +17,8 @@ podría ser útil: https://gardener.cloud/050-tutorials/content/howto/working-wi
 
   kubectl config set-credentials rai --client-certificate=/home/rai/certs/rai.crt --client-key=/home/rai/certs/rai.key
   kubectl config set-context rai-context --cluster=kubernetes --namespace=nlp --user=rai
+si no se especifica el namespace va contra default
+  kubectl config set-context rai-context --cluster=kubernetes --user=rai
   kubectl config use-context rai-context
 
 

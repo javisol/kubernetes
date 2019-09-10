@@ -6,4 +6,4 @@ metadata:
 rules:
 - apiGroups: ["","extensions"] # "" indicates the core API group
   resources: ["services", "ingresses"]
-  verbs: ["get", "watch", "list", "update", "patch", "delete"]
+  verbs: ["get", "watch", "list", "update", "patch", "delete", "create"]
