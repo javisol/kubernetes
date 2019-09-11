@@ -1,0 +1,8 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-security
+rules:
+- apiGroups: ["","extensions"] # "" indicates the core API group
+  resources: ["roles", "rolebindings"]
+  verbs: ["get", "watch", "list", "update", "patch", "delete"]
