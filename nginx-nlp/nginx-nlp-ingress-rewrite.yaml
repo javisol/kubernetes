@@ -1,0 +1,22 @@
+# ingress nginx con rewrite
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-nlp
+  namespace: nlp
+  annotations:
+    nginx.org/rewrites: "serviceName=nginx-nlp-v1 rewrite=/;serviceName=nginx-nlp-v2 rewrite=/v2/"
+spec:
+  rules:
+  - host: nginx.nlp
+    http:
+      paths:
+      - backend:
+          serviceName: nginx-nlp-v1
+          servicePort: 80
+        path: /notifications/
+
+      - backend:
+          serviceName: nginx-nlp-v2
+          servicePort: 80
+        path: /v2/notifications/
