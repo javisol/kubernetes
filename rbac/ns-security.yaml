@@ -1,9 +1,0 @@
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  namespace: nlp
-  name: ns-security
-rules:
-- apiGroups: ["","extensions"] # "" indicates the core API group
-  resources: ["roles", "rolebindings"]
-  verbs: ["get", "watch", "list", "update", "patch", "delete"]
