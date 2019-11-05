@@ -1,0 +1,1 @@
+Tiene que estar apagado Gluster en los nodos; no levanta los pods en los nodos en los que ya hay un daemon de Gluster.

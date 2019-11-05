@@ -1,0 +1,51 @@
+---
+kind: DaemonSet
+apiVersion: extensions/v1beta1
+metadata:
+  name: miglusterfs
+  labels:
+    glusterfs: deployment
+  annotations:
+    description: GlusterFS Daemon Set
+    tags: miglusterfs
+spec:
+  template:
+    metadata:
+      name: miglusterfs
+      labels:
+        glusterfs-node: daemonset
+    spec:
+      nodeSelector:
+        storagenode: glusterfs
+      hostNetwork: true
+      containers:
+      - image: gluster/gluster-centos:latest
+        imagePullPolicy: IfNotPresent
+        name: glusterfs
+        volumeMounts:
+        - name: miglusterfs-data
+          mountPath: "/data/glusterfs"
+        securityContext:
+          capabilities: {}
+          privileged: true
+        readinessProbe:
+          timeoutSeconds: 3
+          initialDelaySeconds: 60
+          exec:
+            command:
+            - "/bin/bash"
+            - "-c"
+            - systemctl status glusterd.service
+        livenessProbe:
+          timeoutSeconds: 3
+          initialDelaySeconds: 60
+          exec:
+            command:
+            - "/bin/bash"
+            - "-c"
+            - systemctl status glusterd.service
+      volumes:
+      - name: miglusterfs-data
+        hostPath:
+          path: "/data/gluster-k8s"
+

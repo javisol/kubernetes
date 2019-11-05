@@ -1,0 +1,10 @@
+apiVersion: "v1"
+kind: "Service"
+metadata:
+    name: "miglusterfs-svc"
+spec:
+    ports:
+        - port: 1
+    selector:
+        app: miglusterfs
+    type: ClusterIP
