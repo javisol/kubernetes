@@ -4,7 +4,7 @@ metadata:
   name: nginx-nlp
   namespace: nlp
 spec:
-  replicas: 3
+  replicas: 2
   template:
     metadata:
       labels:
@@ -34,8 +34,7 @@ spec:
       containers:
       - name: nginx-nlp
         image: javisol/nginx-nlp:1.0
-        imagePullPolicy: Always
-        #imagePullPolicy: IfNotPresent
+        imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 80
         livenessProbe:
